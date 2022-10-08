@@ -16,12 +16,15 @@ class CoinTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         contentView.subviews.forEach{ $0.removeFromSuperview() }
+        cancellables = Set<AnyCancellable>()
     }
     
-    func configure(coin: Coin, viewModel: WalletViewModel) {
+    func configure(coin: Currency, viewModel: WalletViewModel) {
         contentView.backgroundColor = .clear
         backgroundColor = .clear
         
+        /// UI Stuff, it's ideal to not use hardcoded values, for this test I think its fine to have it here
+        /// and focus more on the  complex parts
         let parentView = UIView()
         parentView.backgroundColor = .white.withAlphaComponent(0.05)
         parentView.layer.borderWidth = 1
@@ -38,18 +41,18 @@ class CoinTableViewCell: UITableViewCell {
         parentView.addSubview(currencySign)
         
         currencySign.snp.makeConstraints {
-            $0.top.left.equalToSuperview().offset(5)
+            $0.top.left.equalToSuperview().offset(10)
         }
         
         let name = UILabel()
         name.font = UIFont.avenirMedium(size: 15)
         name.textColor = .lightGray
-        name.text = "\(coin.name)"
+        name.text = coin.name
         parentView.addSubview(name)
         
         name.snp.makeConstraints {
             $0.top.equalTo(currencySign.snp.bottom)
-            $0.left.bottom.equalToSuperview().inset(5)
+            $0.left.bottom.equalToSuperview().inset(10)
         }
            
         let value = UILabel()
@@ -59,7 +62,7 @@ class CoinTableViewCell: UITableViewCell {
         parentView.addSubview(value)
         
         value.snp.makeConstraints {
-            $0.top.right.equalToSuperview().inset(5)
+            $0.top.right.equalToSuperview().inset(10)
             $0.left.greaterThanOrEqualTo(currencySign.snp.left)
         }
         
@@ -70,14 +73,21 @@ class CoinTableViewCell: UITableViewCell {
         
         convertedToUSD.snp.makeConstraints {
             $0.top.equalTo(value.snp.bottom)
-            $0.right.bottom.equalToSuperview().inset(5)
+            $0.right.bottom.equalToSuperview().inset(10)
         }
         
+        /// we fetch converted value upon cell configuration
+        /// in the event that it is reused before the request ends
+        /// we reinit cancellables to cancel request
         viewModel.getConvertedValue(of: coin)
             .receive(on: DispatchQueue.main)
-            .replaceError(with: "")
+            .replaceError(with: 0)
             .sink(receiveValue: { value in
-                convertedToUSD.text = value
+                /// Dont need to display USD converted to USD
+                let stringValue = Formatter.currency(val: value, symbol: "$")
+                convertedToUSD.text = coin.currency == "USD" ? "" : stringValue
+                viewModel.updateTotalBalance(originalCurrency: coin.currency,
+                                             amount: value)
             })
             .store(in: &cancellables)
         

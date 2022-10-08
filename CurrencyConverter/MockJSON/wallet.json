@@ -1,28 +1,102 @@
 {
-    "coins":
+    "currencies":
     [
         {
         "currency": "USD",
         "amount": 1000,
         "symbol": "$",
-        "name": "US Dollar",
-        "keyword": "USD"
+        "name": "US Dollar"
         },
         
         {
         "currency": "EUR",
-        "amount": 50,
+        "amount": 0,
         "symbol": "€",
-        "name": "European Dollar",
-        "keyword": "USD"
+        "name": "European Dollar"
         },
         
         {
         "currency": "JPY",
-        "amount": 110,
+        "amount": 0,
         "symbol": "¥",
-        "name": "Japanese Yen",
-        "keyword": "JPY"
+        "name": "Japanese Yen"
+        },
+        
+        {
+        "currency": "CAD",
+        "amount": 0,
+        "symbol": "CA$",
+        "name": "Canadian dollars"
+        },
+        
+        {
+        "currency": "AED",
+        "amount": 0,
+        "symbol": "AED",
+        "name": "United Arab Emirates Dirham"
+        },
+        
+        {
+        "currency": "AFN",
+        "amount": 0,
+        "symbol": "Af",
+        "name": "Afghan Afghanis"
+        },
+        
+        {
+        "currency": "ARS",
+        "amount": 0,
+        "symbol": "AR$",
+        "name": "Argentine pesos"
+        },
+        
+        {
+        "currency": "AUD",
+        "amount": 0,
+        "symbol": "AU$",
+        "name": "Australian dollars"
+        },
+        
+        {
+        "currency": "BDT",
+        "amount": 0,
+        "symbol": "Tk",
+        "name": "Bangladeshi Taka"
+        },
+        
+        {
+        "currency": "BND",
+        "amount": 0,
+        "symbol": "BN$",
+        "name": "Brunei dollars"
+        },
+        
+        {
+        "currency": "LBP",
+        "amount": 0,
+        "symbol": "L.L.",
+        "name": "Lebanese Pound"
+        },
+        
+        {
+        "currency": "LTL",
+        "amount": 0,
+        "symbol": "Lt",
+        "name": "Lithuanian Litas"
+        },
+        
+        {
+        "currency": "MXN",
+        "amount": 0,
+        "symbol": "MX$",
+        "name": "Mexican pesos"
+        },
+        
+        {
+        "currency": "PHP",
+        "amount": 0,
+        "symbol": "₱",
+        "name": "Philippine pesos"
         }
     ]
 }

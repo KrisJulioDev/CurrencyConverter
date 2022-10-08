@@ -5,17 +5,18 @@
 //  Created by Kris Julio on 10/8/22.
 //
 import Combine
+import UIKit
 
 class Wallet: Codable {
-    let coins: [Coin]
+    let currencies: [Currency]
 }
  
-class Coin: Codable {
+class Currency: Codable {
     let currency: String
     let amount: Double
-    let symbol, name, keyword: String
+    let symbol, name: String
     
     var displayableAmount: String {
-        return "\(symbol)\(amount)"
+        return Formatter.currency(val: amount, symbol: symbol)
     }
 }

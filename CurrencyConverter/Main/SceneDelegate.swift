@@ -22,9 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let client = ConversionHTTPClient()
         let conversionService = ConversionService(client: client)
         let walletViewModel = WalletViewModel(walletService: walletService, conversionService: conversionService)
+        
         let walletViewController = WalletViewController(viewModel: walletViewModel)
         let navigation = UINavigationController(rootViewController: walletViewController)
-        
+        navigation.navigationBar.tintColor = UIColor.appOrange
+
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = navigation
         self.window = window

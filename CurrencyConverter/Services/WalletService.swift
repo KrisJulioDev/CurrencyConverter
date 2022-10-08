@@ -6,39 +6,20 @@
 //
  
 import Foundation
-
-enum WalletServiceError: Error {
-    case fileNotFound
-    case decodingFail
-    
-    var reason: String {
-        switch self {
-        case .fileNotFound:
-            return "File not found"
-        case .decodingFail:
-            return "Decoding failed"
-        }
-    }
-}
-
-protocol WalletServiceProtocol {
-    func fetchWallet() throws -> [Coin]
-}
-
-class WalletService: WalletServiceProtocol {
-    func fetchWallet() throws -> [Coin] {
+ 
+class WalletService: CurrencyServiceProtocol {
+    func fetchCurrencies<T: Codable>() throws -> T {
         guard let jsonFile = Bundle.main.url(forResource: "wallet",
                                              withExtension: "json")
         else {
-            throw WalletServiceError.fileNotFound
+            throw CurrencyServiceError.fileNotFound
         }
         
         do {
             let data = try Data(contentsOf: jsonFile)
-            let wallet = try JSONDecoder().decode(Wallet.self, from: data)
-            return wallet.coins
+            return try JSONDecoder().decode(T.self, from: data)
         } catch {
-            throw WalletServiceError.decodingFail
+            throw CurrencyServiceError.decodingFail
         }
     }
 }

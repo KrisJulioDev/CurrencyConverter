@@ -1,0 +1,28 @@
+{
+    "coins":
+    [
+        {
+        "currency": "USD",
+        "amount": 1000,
+        "symbol": "$",
+        "name": "US Dollar",
+        "keyword": "USD"
+        },
+        
+        {
+        "currency": "EUR",
+        "amount": 50,
+        "symbol": "€",
+        "name": "European Dollar",
+        "keyword": "USD"
+        },
+        
+        {
+        "currency": "JPY",
+        "amount": 110,
+        "symbol": "¥",
+        "name": "Japanese Yen",
+        "keyword": "JPY"
+        }
+    ]
+}

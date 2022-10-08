@@ -9,13 +9,22 @@
 /* Begin PBXBuildFile section */
 		350D83A928F0E4F1004E84F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83A828F0E4F1004E84F2 /* AppDelegate.swift */; };
 		350D83AB28F0E4F1004E84F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83AA28F0E4F1004E84F2 /* SceneDelegate.swift */; };
-		350D83AD28F0E4F2004E84F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83AC28F0E4F1004E84F2 /* ViewController.swift */; };
-		350D83B028F0E4F2004E84F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 350D83AE28F0E4F2004E84F2 /* Main.storyboard */; };
 		350D83B228F0E4F3004E84F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 350D83B128F0E4F3004E84F2 /* Assets.xcassets */; };
 		350D83B528F0E4F3004E84F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 350D83B328F0E4F3004E84F2 /* LaunchScreen.storyboard */; };
 		350D83C028F0E4F4004E84F2 /* CurrencyConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83BF28F0E4F4004E84F2 /* CurrencyConverterTests.swift */; };
 		350D83CA28F0E4F4004E84F2 /* CurrencyConverterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83C928F0E4F4004E84F2 /* CurrencyConverterUITests.swift */; };
 		350D83CC28F0E4F4004E84F2 /* CurrencyConverterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83CB28F0E4F4004E84F2 /* CurrencyConverterUITestsLaunchTests.swift */; };
+		350D83DA28F0E61A004E84F2 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83D928F0E61A004E84F2 /* WalletViewController.swift */; };
+		350D83DD28F0E643004E84F2 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83DC28F0E643004E84F2 /* WalletViewModel.swift */; };
+		350D83E028F0E662004E84F2 /* WalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83DF28F0E662004E84F2 /* WalletService.swift */; };
+		350D83E728F0EB92004E84F2 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83E628F0EB92004E84F2 /* Wallet.swift */; };
+		350D83EA28F0EFC9004E84F2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 350D83E928F0EFC9004E84F2 /* SnapKit */; };
+		350D83EC28F0F0E7004E84F2 /* wallet.json in Resources */ = {isa = PBXBuildFile; fileRef = 350D83EB28F0F0E7004E84F2 /* wallet.json */; };
+		350D83EF28F0F3CF004E84F2 /* ConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83EE28F0F3CF004E84F2 /* ConversionService.swift */; };
+		350D83F228F0F4AE004E84F2 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83F128F0F4AE004E84F2 /* HTTPClient.swift */; };
+		350D83F428F0F687004E84F2 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83F328F0F687004E84F2 /* Conversion.swift */; };
+		350D83F728F100DA004E84F2 /* CoinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83F628F100DA004E84F2 /* CoinTableViewCell.swift */; };
+		350D83FA28F10D4F004E84F2 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D83F928F10D4F004E84F2 /* UIFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +48,6 @@
 		350D83A528F0E4F1004E84F2 /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		350D83A828F0E4F1004E84F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		350D83AA28F0E4F1004E84F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		350D83AC28F0E4F1004E84F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		350D83AF28F0E4F2004E84F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		350D83B128F0E4F3004E84F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		350D83B428F0E4F3004E84F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		350D83B628F0E4F3004E84F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +56,16 @@
 		350D83C528F0E4F4004E84F2 /* CurrencyConverterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyConverterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		350D83C928F0E4F4004E84F2 /* CurrencyConverterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterUITests.swift; sourceTree = "<group>"; };
 		350D83CB28F0E4F4004E84F2 /* CurrencyConverterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		350D83D928F0E61A004E84F2 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		350D83DC28F0E643004E84F2 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
+		350D83DF28F0E662004E84F2 /* WalletService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletService.swift; sourceTree = "<group>"; };
+		350D83E628F0EB92004E84F2 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		350D83EB28F0F0E7004E84F2 /* wallet.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wallet.json; sourceTree = "<group>"; };
+		350D83EE28F0F3CF004E84F2 /* ConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionService.swift; sourceTree = "<group>"; };
+		350D83F128F0F4AE004E84F2 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		350D83F328F0F687004E84F2 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
+		350D83F628F100DA004E84F2 /* CoinTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTableViewCell.swift; sourceTree = "<group>"; };
+		350D83F928F10D4F004E84F2 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				350D83EA28F0EFC9004E84F2 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,10 +117,16 @@
 		350D83A728F0E4F1004E84F2 /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
-				350D83A828F0E4F1004E84F2 /* AppDelegate.swift */,
-				350D83AA28F0E4F1004E84F2 /* SceneDelegate.swift */,
-				350D83AC28F0E4F1004E84F2 /* ViewController.swift */,
-				350D83AE28F0E4F2004E84F2 /* Main.storyboard */,
+				350D83F828F10D48004E84F2 /* Extensions */,
+				350D83ED28F0F14C004E84F2 /* Errors */,
+				350D83E228F0E76C004E84F2 /* Main */,
+				350D83F028F0F497004E84F2 /* Network */,
+				350D83DE28F0E64E004E84F2 /* Services */,
+				350D83E528F0EB7E004E84F2 /* Models */,
+				350D83DB28F0E636004E84F2 /* ViewModels */,
+				350D83D828F0E5F2004E84F2 /* ViewControllers */,
+				350D83F528F100C6004E84F2 /* Views */,
+				350D83E128F0E760004E84F2 /* MockJSON */,
 				350D83B128F0E4F3004E84F2 /* Assets.xcassets */,
 				350D83B328F0E4F3004E84F2 /* LaunchScreen.storyboard */,
 				350D83B628F0E4F3004E84F2 /* Info.plist */,
@@ -127,6 +151,88 @@
 			path = CurrencyConverterUITests;
 			sourceTree = "<group>";
 		};
+		350D83D828F0E5F2004E84F2 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				350D83D928F0E61A004E84F2 /* WalletViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		350D83DB28F0E636004E84F2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				350D83DC28F0E643004E84F2 /* WalletViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		350D83DE28F0E64E004E84F2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				350D83DF28F0E662004E84F2 /* WalletService.swift */,
+				350D83EE28F0F3CF004E84F2 /* ConversionService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		350D83E128F0E760004E84F2 /* MockJSON */ = {
+			isa = PBXGroup;
+			children = (
+				350D83EB28F0F0E7004E84F2 /* wallet.json */,
+			);
+			path = MockJSON;
+			sourceTree = "<group>";
+		};
+		350D83E228F0E76C004E84F2 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				350D83A828F0E4F1004E84F2 /* AppDelegate.swift */,
+				350D83AA28F0E4F1004E84F2 /* SceneDelegate.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		350D83E528F0EB7E004E84F2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				350D83E628F0EB92004E84F2 /* Wallet.swift */,
+				350D83F328F0F687004E84F2 /* Conversion.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		350D83ED28F0F14C004E84F2 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		350D83F028F0F497004E84F2 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				350D83F128F0F4AE004E84F2 /* HTTPClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		350D83F528F100C6004E84F2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				350D83F628F100DA004E84F2 /* CoinTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		350D83F828F10D48004E84F2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				350D83F928F10D4F004E84F2 /* UIFont.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +249,9 @@
 			dependencies = (
 			);
 			name = CurrencyConverter;
+			packageProductDependencies = (
+				350D83E928F0EFC9004E84F2 /* SnapKit */,
+			);
 			productName = CurrencyConverter;
 			productReference = 350D83A528F0E4F1004E84F2 /* CurrencyConverter.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +324,9 @@
 				Base,
 			);
 			mainGroup = 350D839C28F0E4F1004E84F2;
+			packageReferences = (
+				350D83E828F0EFC9004E84F2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 350D83A628F0E4F1004E84F2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,9 +343,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				350D83EC28F0F0E7004E84F2 /* wallet.json in Resources */,
 				350D83B528F0E4F3004E84F2 /* LaunchScreen.storyboard in Resources */,
 				350D83B228F0E4F3004E84F2 /* Assets.xcassets in Resources */,
-				350D83B028F0E4F2004E84F2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +370,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				350D83AD28F0E4F2004E84F2 /* ViewController.swift in Sources */,
+				350D83E728F0EB92004E84F2 /* Wallet.swift in Sources */,
+				350D83EF28F0F3CF004E84F2 /* ConversionService.swift in Sources */,
+				350D83F228F0F4AE004E84F2 /* HTTPClient.swift in Sources */,
+				350D83F428F0F687004E84F2 /* Conversion.swift in Sources */,
+				350D83F728F100DA004E84F2 /* CoinTableViewCell.swift in Sources */,
 				350D83A928F0E4F1004E84F2 /* AppDelegate.swift in Sources */,
+				350D83FA28F10D4F004E84F2 /* UIFont.swift in Sources */,
+				350D83E028F0E662004E84F2 /* WalletService.swift in Sources */,
+				350D83DD28F0E643004E84F2 /* WalletViewModel.swift in Sources */,
 				350D83AB28F0E4F1004E84F2 /* SceneDelegate.swift in Sources */,
+				350D83DA28F0E61A004E84F2 /* WalletViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +417,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		350D83AE28F0E4F2004E84F2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				350D83AF28F0E4F2004E84F2 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		350D83B328F0E4F3004E84F2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -442,7 +554,6 @@
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -470,7 +581,6 @@
 				INFOPLIST_FILE = CurrencyConverter/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -602,6 +712,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		350D83E828F0EFC9004E84F2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		350D83E928F0EFC9004E84F2 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 350D83E828F0EFC9004E84F2 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 350D839D28F0E4F1004E84F2 /* Project object */;
 }

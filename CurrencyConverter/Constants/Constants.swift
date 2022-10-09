@@ -7,6 +7,7 @@
  
 let TOTAL_BALANCE = "Total Balance"
 let EXCHANGE_CURRENCY = "EXCHANGE CURRENCY"
+let CONFIRM = "CONFIRM EXCHANGE"
 let WALLET = "Wallet"
 let EXCHANGE = "Exchange Currency"
 let BUY = "Buy"

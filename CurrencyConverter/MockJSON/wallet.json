@@ -5,98 +5,80 @@
         "currency": "USD",
         "amount": 1000,
         "symbol": "$",
-        "name": "US Dollar"
+        "name": "US Dollar",
+        "locale": "en_US"
         },
         
         {
         "currency": "EUR",
         "amount": 0,
         "symbol": "€",
-        "name": "European Dollar"
+        "name": "European Dollar",
+        "locale": "en_EU"
         },
         
         {
         "currency": "JPY",
         "amount": 0,
         "symbol": "¥",
-        "name": "Japanese Yen"
+        "name": "Japanese Yen",
+        "locale": "ja_JP"
         },
         
         {
         "currency": "CAD",
         "amount": 0,
         "symbol": "CA$",
-        "name": "Canadian dollars"
+        "name": "Canadian dollars",
+        "locale": "en_CA"
         },
         
         {
         "currency": "AED",
         "amount": 0,
         "symbol": "AED",
-        "name": "United Arab Emirates Dirham"
-        },
-        
-        {
-        "currency": "AFN",
-        "amount": 0,
-        "symbol": "Af",
-        "name": "Afghan Afghanis"
+        "name": "United Arab Emirates Dirham",
+        "locale": "ar_AE"
         },
         
         {
         "currency": "ARS",
         "amount": 0,
         "symbol": "AR$",
-        "name": "Argentine pesos"
+        "name": "Argentine pesos",
+        "locale": "es_AR"
         },
         
         {
         "currency": "AUD",
         "amount": 0,
         "symbol": "AU$",
-        "name": "Australian dollars"
-        },
-        
-        {
-        "currency": "BDT",
-        "amount": 0,
-        "symbol": "Tk",
-        "name": "Bangladeshi Taka"
-        },
-        
-        {
-        "currency": "BND",
-        "amount": 0,
-        "symbol": "BN$",
-        "name": "Brunei dollars"
-        },
-        
-        {
-        "currency": "LBP",
-        "amount": 0,
-        "symbol": "L.L.",
-        "name": "Lebanese Pound"
+        "name": "Australian dollars",
+        "locale": "en_AU"
         },
         
         {
         "currency": "LTL",
         "amount": 0,
         "symbol": "Lt",
-        "name": "Lithuanian Litas"
+        "name": "Lithuanian Litas",
+        "locale": "lt"
         },
         
         {
         "currency": "MXN",
         "amount": 0,
         "symbol": "MX$",
-        "name": "Mexican pesos"
+        "name": "Mexican pesos",
+        "locale": "es_MX"
         },
         
         {
         "currency": "PHP",
         "amount": 0,
         "symbol": "₱",
-        "name": "Philippine pesos"
+        "name": "Philippine pesos",
+        "locale": "fil_PH"
         }
     ]
 }

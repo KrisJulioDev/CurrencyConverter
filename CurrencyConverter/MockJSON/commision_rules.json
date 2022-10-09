@@ -1,0 +1,9 @@
+{
+    "rules": [
+    {
+        "freeTransactions": 5
+        "freeForAmount": 200
+    }
+        
+    ]
+}

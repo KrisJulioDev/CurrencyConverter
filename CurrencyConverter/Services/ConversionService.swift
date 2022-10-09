@@ -8,13 +8,9 @@
 import Foundation
 import Combine
 
-class Converted: Codable {
-    let amount: String
-    let currency: String
-}
-
 protocol ConversionServiceProtocol {
-    func convert(conversion: Conversion) -> AnyPublisher<Converted, Error>
+    func getConversion(conversion: Conversion) -> AnyPublisher<Converted, Error>
+//    func convert(from: Currency, to: Currency) -> (Currency, Currency)
 }
 
 class ConversionService: ConversionServiceProtocol {
@@ -24,8 +20,8 @@ class ConversionService: ConversionServiceProtocol {
         self.client = client
     }
     
-    func convert(conversion: Conversion) -> AnyPublisher<Converted, Error> {
-        let path = createPath(from: conversion) 
+    func getConversion(conversion: Conversion) -> AnyPublisher<Converted, Error> {
+        let path = createPath(from: conversion)
         return client.request(path: path).eraseToAnyPublisher()
     }
     
@@ -33,3 +29,4 @@ class ConversionService: ConversionServiceProtocol {
         return "/currency/commercial/exchange/\(conversion.fromAmount)-\(conversion.fromCurrency)/\(conversion.toCurrency)/latest"
     }
 }
+

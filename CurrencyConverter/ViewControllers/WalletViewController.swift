@@ -11,7 +11,9 @@ import Combine
 
 class WalletViewController: UIViewController {
     private var cancellables: Set<AnyCancellable> = []
+    
     let viewModel: WalletViewModel
+    
      
     lazy var totalAmount: UILabel = {
         return UIFactory.createLabel(text: TOTAL_BALANCE,
@@ -125,9 +127,9 @@ extension WalletViewController {
     }
     
     func setupObservers() {
-        viewModel.$displayableCurrency
+        viewModel.userWallet.$international
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] curr in
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
@@ -137,10 +139,22 @@ extension WalletViewController {
             .compactMap { Formatter.currency(val: $0, symbol: "$")}
             .assign(to: \.text, on: totalAmount)
             .store(in: &cancellables)
+        
+        viewModel.userWallet.$dollars
+            .receive(on: DispatchQueue.main)
+            .map { $0.values }
+            .map { $0.reduce(0) {$0 + $1} }
+            .compactMap { Formatter.currency(val: $0, symbol: "$") }
+            .assign(to: \.text, on: totalAmount)
+            .store(in: &cancellables)
     }
 
     @objc func exchangeDidTap() {
-        let viewModel = ExchangeViewModel(currencies: viewModel.currencies)
+        let client = ConversionHTTPClient()
+        let service = ConversionService(client: client)
+        let viewModel = ExchangeViewModel(currencies: viewModel.currencies,
+                                          wallet: viewModel.userWallet,
+                                          conversionService: service)
         let exchangeViewController = ExchangeViewController(viewModel: viewModel)
         navigationController?.pushViewController(exchangeViewController, animated: true)
     }
@@ -154,14 +168,14 @@ extension WalletViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.displayableCurrency.count
+        return viewModel.userWallet.international.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CoinTableViewCell.identifier,
                                                  for: indexPath) as? CoinTableViewCell
         
-        let coin = viewModel.displayableCurrency[indexPath.row]
+        let coin = viewModel.userWallet.international[indexPath.row]
         cell?.configure(coin: coin, viewModel: viewModel)
         return cell ?? UITableViewCell()
     }

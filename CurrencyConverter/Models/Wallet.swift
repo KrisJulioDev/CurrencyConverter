@@ -7,14 +7,14 @@
 import Combine
 import UIKit
 
-class Wallet: Codable {
+struct Wallet: Codable {
     let currencies: [Currency]
 }
  
-class Currency: Codable {
+struct Currency: Codable {
     let currency: String
     let amount: Double
-    let symbol, name: String
+    let symbol, locale, name: String
     
     var displayableAmount: String {
         return Formatter.currency(val: amount, symbol: symbol)

@@ -8,22 +8,22 @@
 import Foundation
 import Combine
 
+
 class WalletViewModel {
+    let userWallet: UserWallet
     let walletService: WalletService
     let conversionService: ConversionService 
     
-    @Published var currencies: [Currency] = []
-    @Published var displayableCurrency: [Currency] = []
+    @Published var currencies: [Currency] = [] 
     @Published var totalMoney: Double = 0
     @Published var error: CurrencyServiceError?
-    
-    /// hash-map to store values of all currencies, we can use to sum up user's wallet into USD
-    @Published var USDWallet: [String: Double] = [:]
-    
+     
     /// this can be change depends on user's preference, but for now we set it to USD
     private let globalCurrency = "USD"
+    private var cancellables: Set<AnyCancellable> = []
     
     init(walletService: WalletService, conversionService: ConversionService) {
+        self.userWallet = UserWallet()
         self.walletService = walletService
         self.conversionService = conversionService
         self.fetchCurrencies()
@@ -32,8 +32,12 @@ class WalletViewModel {
     private func fetchCurrencies() {
         do {
             let wallet: Wallet = try walletService.fetchCurrencies()
-            let displayable = wallet.currencies.filter { $0.amount > 0 }
-            displayableCurrency.append(contentsOf: displayable)
+            let balance = wallet.currencies.filter { $0.amount > 0 }
+            
+            /// save all user's currencies
+            saveToIntlWallet(userCurrency: balance)
+            
+            /// store all currencies fetched for display
             currencies.append(contentsOf:wallet.currencies)
         } catch(let error) {
             if let error = error as? CurrencyServiceError {
@@ -42,9 +46,31 @@ class WalletViewModel {
         }
     }
     
-    func updateTotalBalance(originalCurrency: String, amount: Double) {
-        USDWallet[originalCurrency] = amount
-        totalMoney = USDWallet.values.reduce(0) { $0 + $1 }
+    func saveToIntlWallet(userCurrency: [Currency]) {
+        userCurrency.forEach { currency in
+            userWallet.international.append(currency)
+        }
+        
+        /// observe changes to user's international wallet to convert it all to USD and display as Total in USD
+        userWallet.$international
+            .subscribe(on: DispatchQueue.global())
+            .sink(receiveValue: { [weak self] currencies in
+                currencies.forEach { [weak self] currency in
+                    guard let self = self else { return }
+                    self.getConvertedValue(of: currency)
+                        .replaceError(with: 0)
+                        .sink(receiveValue: { [weak self] value in
+                            self?.saveToDollarWallet(currencySymbol: currency.currency, amount: value)
+                        })
+                        .store(in: &self.cancellables)
+                }
+             })
+            .store(in: &cancellables)
+    }
+    
+    func saveToDollarWallet(currencySymbol: String, amount: Double) {
+        /// symbol can be USD, PHP, CAD, EUD but currency amount will always be in USD
+        userWallet.dollars[currencySymbol] = amount
     }
     
     func getConvertedValue(of currency: Currency) -> AnyPublisher<Double, Error> {
@@ -53,7 +79,7 @@ class WalletViewModel {
                                     toCurrency: globalCurrency)
         
         return conversionService
-            .convert(conversion: conversion)
+            .getConversion(conversion: conversion)
             .map { Double($0.amount) ?? 0 }
             .eraseToAnyPublisher()
     }

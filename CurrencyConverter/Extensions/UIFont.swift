@@ -19,4 +19,8 @@ extension UIFont {
     static func avenirBold(size: CGFloat) -> UIFont {
         return UIFont(name: "AvenirNextCondensed-Bold", size: size)!
     }
+ 
+    static func gillSemibold(size: CGFloat) -> UIFont {
+        return UIFont(name: "Futura-Medium", size: size)!
+    }
 }

@@ -57,7 +57,7 @@ class CoinTableViewCell: UITableViewCell {
            
         let value = UILabel()
         value.font = UIFont.avenirMedium(size: 25)
-        value.textColor = .white
+        value.textColor = .appOrange
         value.text = coin.displayableAmount
         parentView.addSubview(value)
         
@@ -76,20 +76,15 @@ class CoinTableViewCell: UITableViewCell {
             $0.right.bottom.equalToSuperview().inset(10)
         }
         
-        /// we fetch converted value upon cell configuration
-        /// in the event that it is reused before the request ends
-        /// we reinit cancellables to cancel request
-        viewModel.getConvertedValue(of: coin)
+        viewModel.userWallet.$dollars
+            .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
-            .replaceError(with: 0)
-            .sink(receiveValue: { value in
-                /// Dont need to display USD converted to USD
-                let stringValue = Formatter.currency(val: value, symbol: "$")
-                convertedToUSD.text = coin.currency == "USD" ? "" : stringValue
-                viewModel.updateTotalBalance(originalCurrency: coin.currency,
-                                             amount: value)
-            })
+            .sink { output in
+                if let amount = output[coin.currency] {
+                    let stringValue = Formatter.currency(val: amount, symbol: "$")
+                    convertedToUSD.text = coin.currency == "USD" ? "" : stringValue
+                }
+            }
             .store(in: &cancellables)
-        
     }
 }

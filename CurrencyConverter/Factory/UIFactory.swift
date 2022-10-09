@@ -8,13 +8,14 @@
 import UIKit
 
 struct UIFactory {
-    enum LabelWeight {
+    enum LabelType {
         case regular
         case medium
         case bold
+        case number
     }
     
-    static func createLabel(text: String, size: CGFloat, color: UIColor, type: LabelWeight = .regular) -> UILabel {
+    static func createLabel(text: String, size: CGFloat, color: UIColor, type: LabelType = .regular) -> UILabel {
         let label = UILabel()
         
         switch type {
@@ -24,7 +25,10 @@ struct UIFactory {
             label.font = UIFont.avenirMedium(size: size)
         case .bold:
             label.font = UIFont.avenirBold(size: size)
+        case .number:
+            label.font = UIFont.gillSemibold(size: size)
         }
+        
         label.textColor = color
         label.text = text
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,5 +51,11 @@ struct UIFactory {
         textField.textColor = color
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
+    }
+    
+    static func createAlert(title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        return alert
     }
 }

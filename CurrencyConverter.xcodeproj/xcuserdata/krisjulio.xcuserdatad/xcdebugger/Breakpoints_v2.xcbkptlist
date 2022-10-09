@@ -16,5 +16,21 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DD99049E-4DF5-4124-B96B-30ACF07BFF9A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CurrencyConverter/ViewModels/WalletViewModel.swift"
+            startingColumnNumber = "24"
+            endingColumnNumber = "24"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "walletService"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

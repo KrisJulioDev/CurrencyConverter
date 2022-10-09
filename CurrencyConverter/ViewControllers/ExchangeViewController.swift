@@ -12,23 +12,30 @@ import Combine
 class ExchangeViewController: UIViewController {
     let viewModel: ExchangeViewModel
     
-    let fromButton = UIButton()
-    var fromLabel = UILabel()
-    let toButton = UIButton()
-    var toLabel = UILabel()
+    /// Header view
+    lazy var header: ExchangeHeader = {
+        return ExchangeHeader(delegate: self)
+    }()
     
     lazy var inputAmountField: UITextField  = {
-        return UIFactory.createTextField(size: 30, color: .appOrange)
+        return UIFactory.createTextField(size: 30, color: .gray)
+    }()
+    
+    lazy var exchangeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(CONFIRM, for: .normal)
+        button.titleLabel?.font = UIFont.avenirMedium(size: 20)
+        button.backgroundColor = .appOrange
+        button.setTitleColor(.appDarkblue, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.layer.cornerRadius = 5
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(confirmExchange), for: .touchUpInside)
+        return button
     }()
     
     private var cancellables: Set<AnyCancellable> = []
-    
-    private lazy var inputFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
     
     init(viewModel: ExchangeViewModel) {
         self.viewModel = viewModel
@@ -55,93 +62,18 @@ class ExchangeViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
          
-        let container = UIFactory.createContainer()
-        view.addSubview(container)
-        
-        container.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(15)
+        view.addSubview(header)
+        header.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(15)
+            make.left.right.equalToSuperview().inset(15)
             make.height.equalTo(120)
         }
-        
-        // Conversion of currencies display
-        let anchorDivider = UIView()
-        anchorDivider.backgroundColor = .clear
-        anchorDivider.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(anchorDivider)
-        
-        anchorDivider.snp.makeConstraints { make in
-            make.centerY.left.right.equalToSuperview()
-            make.height.equalTo(3)
-        }
-        
-        let from = UIFactory.createLabel(text: SELL, size: 22, color: .gray)
-        container.addSubview(from)
-        
-        from.snp.makeConstraints { make in
-            make.bottom.equalTo(anchorDivider.snp.top).offset(-12)
-            make.left.equalToSuperview().inset(15)
-            make.width.equalTo(60)
-        }
-        
-        let to = UIFactory.createLabel(text: BUY, size: 22, color: .gray)
-        container.addSubview(to)
-        
-        to.snp.makeConstraints { make in
-            make.top.equalTo(anchorDivider.snp.bottom).offset(7)
-            make.left.equalToSuperview().inset(15)
-            make.width.equalTo(60)
-        }
-        
-        fromButton.titleLabel?.font = UIFont.avenirMedium(size: 22)
-        fromButton.backgroundColor = .clear
-        fromButton.setTitleColor(.appOrange, for: .normal)
-        fromButton.setTitleColor(.gray, for: .highlighted)
-        fromButton.layer.cornerRadius = 5
-        fromButton.translatesAutoresizingMaskIntoConstraints = false
-        fromButton.addTarget(self, action: #selector(changeCurrency(button:)), for: .touchUpInside)
-        container.addSubview(fromButton)
-        
-        fromButton.snp.makeConstraints { make in
-            make.left.equalTo(from.snp.right).offset(5)
-            make.centerY.equalTo(from.snp.centerY)
-        }
-        
-        fromLabel = UIFactory.createLabel(text: "", size: 13, color: .gray)
-        container.addSubview(fromLabel)
-        fromLabel.snp.makeConstraints { make in
-            make.left.equalTo(fromButton.snp.left)
-            make.top.equalTo(fromButton.snp.bottom).offset(-10)
-        }
-        
-        // we display second currency from the data for to: value
-        toButton.setTitleColor(.appOrange, for: .normal)
-        toButton.setTitleColor(.gray, for: .highlighted)
-        toButton.titleLabel?.font = UIFont.avenirMedium(size: 22)
-        toButton.backgroundColor = .clear
-        toButton.layer.cornerRadius = 5
-        toButton.translatesAutoresizingMaskIntoConstraints = false
-        toButton.addTarget(self, action: #selector(changeCurrency(button:)), for: .touchUpInside)
-        
-        container.addSubview(toButton)
-        
-        toButton.snp.makeConstraints { make in
-            make.left.equalTo(to.snp.right).offset(5)
-            make.centerY.equalTo(to.snp.centerY)
-        }
-        
-        toLabel = UIFactory.createLabel(text: "", size: 13, color: .gray)
-        container.addSubview(toLabel)
-        toLabel.snp.makeConstraints { make in
-            make.left.equalTo(toButton.snp.left)
-            make.top.equalTo(toButton.snp.bottom).offset(-10)
-        }
-        
+         
         let textFieldContainer = UIFactory.createContainer()
         textFieldContainer.clipsToBounds = true
         view.addSubview(textFieldContainer)
         textFieldContainer.snp.makeConstraints { make in
-            make.top.equalTo(container.snp.bottom).offset(20)
+            make.top.equalTo(header.snp.bottom).offset(20)
             make.left.right.equalToSuperview().inset(15)
         }
         
@@ -151,21 +83,35 @@ class ExchangeViewController: UIViewController {
         textFieldContainer.addSubview(amountContainer)
         amountContainer.snp.makeConstraints { make in
             make.top.left.bottom.equalToSuperview().inset(1)
+            make.width.equalTo(100)
         }
         
         let amountLabel = UIFactory.createLabel(text: "Amount", size: 20, color: .gray, type: .medium)
         amountContainer.addSubview(amountLabel)
-        amountLabel.snp.makeConstraints { $0.edges.equalToSuperview().inset(10) }
+        amountLabel.snp.makeConstraints { $0.centerX.centerY.equalToSuperview() }
          
-        inputAmountField.keyboardType = .numberPad
-        inputAmountField.textAlignment = .right
+        // set by default to 0
+        inputAmountField.text = "0"
+        inputAmountField.keyboardType = .decimalPad
+        inputAmountField.textAlignment = .left
+        inputAmountField.minimumFontSize = 5
+        inputAmountField.clipsToBounds = true
+        inputAmountField.delegate = self
         textFieldContainer.addSubview(inputAmountField)
         inputAmountField.snp.makeConstraints { make in
-            make.left.equalTo(amountContainer.snp.left).offset(10)
+            make.left.equalTo(amountContainer.snp.right).offset(10)
             make.top.right.bottom.equalToSuperview().inset(10)
         }
         
         inputAmountField.becomeFirstResponder()
+         
+        view.addSubview(exchangeButton)
+        exchangeButton.snp.makeConstraints { make in
+            make.top.equalTo(textFieldContainer.snp.bottom).offset(10)
+            make.left.equalTo(textFieldContainer.snp.left)
+            make.right.equalTo(textFieldContainer.snp.right)
+            make.height.equalTo(40)
+        }
         
         setObservers()
     }
@@ -175,8 +121,8 @@ class ExchangeViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .compactMap { $0 }
             .sink { [weak self] in
-                self?.fromButton.setTitle($0.currency, for: .normal)
-                self?.fromLabel.text = $0.name
+                self?.header.fromButton.setTitle($0.currency, for: .normal)
+                self?.header.fromLabel.text = $0.name
             }
             .store(in: &cancellables)
         
@@ -184,47 +130,97 @@ class ExchangeViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .compactMap { $0 }
             .sink { [weak self] in
-                self?.toButton.setTitle($0.currency, for: .normal)
-                self?.toLabel.text = $0.name
+                self?.header.toButton.setTitle($0.currency, for: .normal)
+                self?.header.toLabel.text = $0.name
             }
             .store(in: &cancellables)
         
-        NotificationCenter.default
-            .publisher(for: UITextField.textDidChangeNotification, object: inputAmountField)
-            .sink(receiveValue: { [weak self] result in
-                guard let self = self else {
-                    return
-                }
+        viewModel.$toValue
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                guard let self = self else { return }
+                let string = String(value)
+                let symbol = self.viewModel.toCurrency.symbol
+                let (formatted, _) = self.viewModel.formattedValue(symbol: symbol, field: string)
                 
-                if let textField = result.object as? UITextField {
-                    if let field = textField.text {
-                        let symbol = self.viewModel.fromCurrency?.symbol ?? ""
-                        let cleanNumbers = field
-                            /// remove commas
-                            .replacingOccurrences(of: self.inputFormatter.groupingSeparator, with: "")
-                            /// remove symbol
-                            .replacingOccurrences(of: symbol, with: "")
-                        
-                        if let numberWithoutGroupingSeparator = self.inputFormatter.number(from: cleanNumbers),
-                           let formattedText = self.inputFormatter.string(from: numberWithoutGroupingSeparator) {
-                            self.inputAmountField.text = symbol + formattedText
-                        }
-                    }
-                }
+                /// set the same display of amount to header sell label
+                let positiveDisplay = "+ " + symbol + formatted
+                self.header.buyValueLabel.text = value < 1 ? "- - - -" : positiveDisplay
+            }
+            .store(in: &cancellables) 
+        
+        Publishers.CombineLatest(viewModel.$fromValue, viewModel.$toValue)
+            .receive(on: DispatchQueue.main)
+            .compactMap { $0 > 0 && $1 > 0 }
+            .sink(receiveValue: { isComplete in
+                self.exchangeButton.isEnabled = isComplete
+                self.exchangeButton.alpha = isComplete ? 1 : 0.4
             })
             .store(in: &cancellables)
+ 
     }
     
-    @objc func changeCurrency(button: UIButton) {
-        let currencyList = CurrencySelectionViewController(currencies: viewModel.currencies)
-        currencyList.didSelect = { [weak self] selected in
-            if button == self?.fromButton {
-                self?.viewModel.fromCurrency = selected
-            } else {
-                self?.viewModel.toCurrency = selected
-            }
+    @objc func confirmExchange() {
+        if let error = viewModel.errorOnExchange() {
+            let alert = UIFactory.createAlert(title: error.title, message: error.message)
+            navigationController?.present(alert, animated: true)
+        } else {
+            viewModel.proceedExchange()
         }
-        inputAmountField.text = ""
+    }
+}
+
+extension ExchangeViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+         
+        if textField == inputAmountField {
+             
+            /// Update Amount Input field with currency format
+            textField.text = viewModel.formattedInput(text: textField.text ?? "",
+                                                      replacement: string,
+                                                      range: range)
+            
+            let fromCurrency = viewModel.fromCurrency
+            let symbol = fromCurrency.symbol
+            let (_, value) = viewModel.formattedValue(symbol: symbol, field: textField.text ?? "")
+            self.viewModel.inputChanged(value.doubleValue)
+            
+            /// set the same display of amount to header sell label
+            /// show negative display for BUY
+            let negativeDisplay = "- \(self.inputAmountField.text ?? "")"
+            self.header.sellValueLabel.text = value.doubleValue < 1 ? "- - - -"
+                                              : negativeDisplay
+            
+            return false
+        } else {
+            return true
+        }
+    }
+}
+
+extension ExchangeViewController: ExchangeHeaderDelegate {
+    func changedSellCurrency() {
+        showCurrencySelection(currencies: viewModel.userWallet.international) { [weak self] selected in
+            self?.viewModel.fromCurrency = selected
+        }
+    }
+    
+    func changedBuyCurrency() {
+        showCurrencySelection(currencies: viewModel.currencies) { [weak self] selected in
+            self?.viewModel.toCurrency = selected
+        }
+    }
+    
+    private func showCurrencySelection(currencies: [Currency], didSelect: @escaping ((Currency) -> Void)) {
+        let currencyList = CurrencySelectionViewController(currencies: currencies)
+        currencyList.didSelect = didSelect
         navigationController?.pushViewController(currencyList, animated: true)
+        clearValues()
+    }
+    
+    private func clearValues() {
+        inputAmountField.text = ""
+        header.sellValueLabel.text = ""
+        header.buyValueLabel.text = ""
     }
 }

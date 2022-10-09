@@ -8,11 +8,6 @@
 import Foundation
 import Combine
 
-enum APIError: LocalizedError {
-  /// Invalid request, e.g. invalid URL
-  case invalidRequestError(String)
-}
-
 protocol HTTPClient {
     func request<T: Codable>(path: String) -> AnyPublisher<T, Error>
 }
@@ -34,7 +29,7 @@ class ConversionHTTPClient: HTTPClient {
         
         return URLSession.shared
                 .dataTaskPublisher(for: url)
-                .map(\.data) 
+                .map(\.data)
                 .decode(type: T.self, decoder: JSONDecoder())
                 .eraseToAnyPublisher()
     }

@@ -12,8 +12,6 @@ Language & Envinronment:
 Total Hours: 
 - Estimated 16 hours in 3days
 ---
-- 
----
 3rd Party Library used: 
 ---
 - Snapkit using PCM : Since I didn't use NIB and Storyboard, this library helps me to layout the UI quicker.
@@ -21,7 +19,7 @@ Total Hours:
 Architecture
 ---
 - Ive used Model-View-ViewModel(MVVM) for the architecture. You can also see some patterns like direct injection(DI), factory, delegation, decorators. 
-- I applied single responsibility principle which can be helpful for Unit Testing, though I haven't added Unit Tests for this as it isn't required from the test.
+- I applied single responsibility principle which can be helpful for Unit Testing.
 ---
 Details
 ---
@@ -32,7 +30,7 @@ Details
   - 200 EUR minimum is free transaction
   - 10 intervals is free transaction
 - Didn't add data persistency since the data always come from json every time the app launches
-- UI/UX couldn't be the best, but I tried :D 
+- UI/UX isn't the best, but I tried :D 
 
 ![screenshots](https://user-images.githubusercontent.com/8087709/194843096-8007a7de-1935-468e-b690-ba7ec7662092.png)
 

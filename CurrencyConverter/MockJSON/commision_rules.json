@@ -4,7 +4,7 @@
     "promos": [
         {
             "type": "free_transaction",
-            "value": 5
+            "value": 2
         },
         {
             "type": "amount_minimum",

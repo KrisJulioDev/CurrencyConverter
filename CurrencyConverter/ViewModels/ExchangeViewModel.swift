@@ -9,12 +9,6 @@ import Foundation
 import Combine
 
 class ExchangeViewModel {
-    enum PromoType: Equatable {
-        case freeTransaction(Int)
-        case minAmount(Int)
-        case interval(Int)
-        case none
-    }
     
     let userWallet: UserWallet
     let walletService: WalletService
@@ -207,36 +201,10 @@ class ExchangeViewModel {
     
     func updateAvailablePromo() {
         guard let comission = comission else { return }
-         
-        var promoType: PromoType = .none
-        
-        /// check promo if the user is eligible for free transactions
-        comission.promos.forEach { promo in
-            if promo.type == "free_transaction" {
-                if userWallet.transactionsFulfilled < promo.value {
-                    promoType = .freeTransaction(promo.value)
-                    return
-                }
-            }
-            
-            if promo.type == "intervals" {
-                if userWallet.transactionsFulfilled > 0 &&
-                    /// add + 1, fulfilled + this transaction check
-                    (userWallet.transactionsFulfilled + 1) % promo.value == 0 {
-                    promoType = .interval(promo.value)
-                    return
-                }
-            }
-            
-            if promo.type == "amount_minimum" {
-                if comissionInReqdCurrency >= Double(promo.value) && fromCurrency?.currency == promo.currency {
-                    promoType = .minAmount(promo.value)
-                    return
-                }
-            }
-        }
-        
-        self.promoType = promoType
+        promoType = comissionService.availablePromo(comission: comission,
+                                                    userWallet: userWallet,
+                                                    currencyInSelect: fromCurrency?.currency,
+                                                    currencyAmount: fromValue)
     }
     
     func proceedExchange() {

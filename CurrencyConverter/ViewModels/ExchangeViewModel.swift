@@ -129,6 +129,13 @@ class ExchangeViewModel {
     }
     
     //MARK: Business logic
+    func currentBalance() -> Double {
+        if let currencyInWallet = userWallet.currencyInWallet(symbol: fromCurrency.currency) {
+            return currencyInWallet.amount
+        }
+        return 0
+    }
+    
     func totalExchangeCost() -> Double {
         return fromValue + (fromValue * estimateCommision())
     }

@@ -3,9 +3,9 @@
     "amountMinInCurrency": "EUR",
     "promos": [
         {
-            "freeTransaction": 3,
+            "freeTransaction": 5,
             "amountMin": 200,
-            "intervals": 3
+            "intervals": 10
         }
     ]
 }

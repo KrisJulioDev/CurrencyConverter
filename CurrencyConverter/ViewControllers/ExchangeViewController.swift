@@ -123,8 +123,13 @@ class ExchangeViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .compactMap { $0 }
             .sink { [weak self] in
-                self?.header.fromButton.setTitle($0.currency, for: .normal)
-                self?.header.fromLabel.text = $0.name
+                guard let self = self else { return }
+                
+                self.header.fromButton.setTitle($0.currency, for: .normal)
+                self.header.fromLabel.text = $0.name
+                
+                let balance = String(format: "%.2f", self.viewModel.currentBalance()).currencyFormatting()
+                self.header.availableBalance.text = "Balance: \(balance)"
             }
             .store(in: &cancellables)
         

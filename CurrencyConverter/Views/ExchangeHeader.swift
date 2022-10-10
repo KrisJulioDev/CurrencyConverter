@@ -21,6 +21,7 @@ class ExchangeHeader: UIView {
     
     var fromLabel = UIFactory.createLabel(text: "", size: 13, color: .gray)
     var toLabel = UIFactory.createLabel(text: "", size: 13, color: .gray)
+    let availableBalance = UIFactory.createLabel(text: "", size: 12, color: .gray)
     
     let sellValueLabel = UIFactory.createLabel(text: "", size: 24, color: .red, type: .number)
     let buyValueLabel = UIFactory.createLabel(text: "", size: 24, color: .green, type: .number)
@@ -117,6 +118,12 @@ class ExchangeHeader: UIView {
         sellValueLabel.snp.makeConstraints { make in
             make.centerY.equalTo(fromButton.snp.centerY)
             make.left.greaterThanOrEqualTo(fromButton.snp.right).offset(5)
+            make.right.equalToSuperview().inset(15)
+        }
+         
+        container.addSubview(availableBalance)
+        availableBalance.snp.makeConstraints { make in
+            make.centerY.equalTo(fromLabel.snp.centerY)
             make.right.equalToSuperview().inset(15)
         }
         

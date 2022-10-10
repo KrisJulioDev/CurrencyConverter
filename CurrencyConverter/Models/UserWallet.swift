@@ -28,7 +28,9 @@ extension UserWallet {
     
     func addToWallet(_ currency: Currency) {
         removeFromWallet(symbol: currency.currency)
-        international.append(currency)
+        if currency.amount > 0 {
+            international.append(currency)
+        }
     }
     
     func removeFromWallet(symbol: String) {

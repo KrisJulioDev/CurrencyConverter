@@ -145,7 +145,7 @@ extension WalletViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] err in
                 if let e = err {
-                    let alert = UIFactory.createAlert(title: "System Error", message: e.reason) { _ in
+                    let alert = UIFactory.createAlert(title: e.title, message: e.reason) { _ in
                         // simulate crash to close the app for now
                         exit(0)
                     }

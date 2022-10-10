@@ -43,7 +43,7 @@ class CurrencySelectionViewController: UIViewController {
 extension CurrencySelectionViewController {
     func setupDisplay() {
         view.backgroundColor = .appDarkblue
-        navigationController?.title = "Select Currency"
+        navigationController?.title = SELECT_CURRENCY
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in

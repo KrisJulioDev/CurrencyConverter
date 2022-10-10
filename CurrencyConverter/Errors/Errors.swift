@@ -15,6 +15,10 @@ enum DecodingServiceError: Error {
    case fileNotFound
    case decodingFail
    
+    var title: String {
+        return "System Error"
+    }
+    
    var reason: String {
        switch self {
        case .fileNotFound:

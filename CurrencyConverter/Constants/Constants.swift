@@ -17,6 +17,10 @@ let CURRENCY_CONVERTED = "Currency converted"
 let CONVERTED_MSG = "You have converted"
 let CONVERTED_TO = "To"
 let COMISSION_FEE = "Comission Fee - "
+let AMOUNT = "Amount"
+let BALANCE = "Balance: "
+let EMPTY = "- - - -"
+let SELECT_CURRENCY = "Select Currency"
 
 /// this can be change depends on user's preference, but for now we set it to USD
 let GLOBAL_CURRENCY = "USD"

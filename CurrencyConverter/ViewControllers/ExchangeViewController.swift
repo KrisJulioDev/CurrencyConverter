@@ -88,7 +88,7 @@ class ExchangeViewController: UIViewController {
             make.width.equalTo(100)
         }
         
-        let amountLabel = UIFactory.createLabel(text: "Amount", size: 20, color: .gray, type: .medium)
+        let amountLabel = UIFactory.createLabel(text: AMOUNT, size: 20, color: .gray, type: .medium)
         amountContainer.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { $0.centerX.centerY.equalToSuperview() }
          
@@ -129,7 +129,7 @@ class ExchangeViewController: UIViewController {
                 self.header.fromLabel.text = $0.name
                 
                 let balance = String(format: "%.2f", self.viewModel.currentBalance()).currencyFormatting()
-                self.header.availableBalance.text = "Balance: \(balance)"
+                self.header.availableBalance.text = BALANCE + balance
             }
             .store(in: &cancellables)
         
@@ -152,7 +152,7 @@ class ExchangeViewController: UIViewController {
                 
                 /// set the same display of amount to header sell label
                 let positiveDisplay = "+ " + formatted
-                self.header.buyValueLabel.text = value == 0 ? "- - - -" : positiveDisplay
+                self.header.buyValueLabel.text = value == 0 ? EMPTY : positiveDisplay
             }
             .store(in: &cancellables)
         
@@ -246,7 +246,7 @@ extension ExchangeViewController: UITextFieldDelegate {
                 /// set the same display of amount to header sell label
                 /// show negative display for BUY
                 let negativeDisplay = "- \(self.inputAmountField.text ?? "")"
-                self.header.sellValueLabel.text = value.doubleValue == 0 ? "- - - -"
+                self.header.sellValueLabel.text = value.doubleValue == 0 ? EMPTY
                                                   : negativeDisplay
             }
             

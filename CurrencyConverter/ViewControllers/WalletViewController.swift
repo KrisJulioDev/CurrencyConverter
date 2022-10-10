@@ -23,14 +23,7 @@ class WalletViewController: UIViewController {
     }()
     
     lazy var convertButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(EXCHANGE_CURRENCY, for: .normal)
-        button.titleLabel?.font = UIFont.avenirMedium(size: 20)
-        button.backgroundColor = .appOrange
-        button.setTitleColor(.appDarkblue, for: .normal)
-        button.setTitleColor(.gray, for: .highlighted)
-        button.layer.cornerRadius = 5
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let button = UIFactory.createActionButton(title: EXCHANGE_CURRENCY)
         button.addTarget(self, action: #selector(exchangeDidTap), for: .touchUpInside)
         return button
     }()
@@ -147,14 +140,29 @@ extension WalletViewController {
             .compactMap { Formatter.currency(val: $0, symbol: "$") }
             .assign(to: \.text, on: totalAmount)
             .store(in: &cancellables)
+        
+        viewModel.$error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] err in
+                if let e = err {
+                    let alert = UIFactory.createAlert(title: "System Error", message: e.reason) { _ in
+                        // simulate crash to close the app
+                        exit(0)
+                    }
+                    self?.navigationController?.present(alert, animated: true)
+                }
+            }
+            .store(in: &cancellables)
     }
 
     @objc func exchangeDidTap() {
         let client = ConversionHTTPClient()
         let service = ConversionService(client: client)
+        let comissionService = ComissionService()
         let viewModel = ExchangeViewModel(currencies: viewModel.currencies,
                                           wallet: viewModel.userWallet,
-                                          conversionService: service)
+                                          conversionService: service,
+                                          comissionService: comissionService)
         let exchangeViewController = ExchangeViewController(viewModel: viewModel)
         navigationController?.pushViewController(exchangeViewController, animated: true)
     }

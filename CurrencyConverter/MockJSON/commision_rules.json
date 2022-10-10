@@ -1,9 +1,11 @@
 {
-    "rules": [
-    {
-        "freeTransactions": 5
-        "freeForAmount": 200
-    }
-        
+    "commisionRate": 0.07,
+    "amountMinInCurrency": "EUR",
+    "promos": [
+        {
+            "freeTransaction": 3,
+            "amountMin": 200,
+            "intervals": 3
+        }
     ]
 }

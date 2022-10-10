@@ -22,17 +22,13 @@ class ExchangeViewController: UIViewController {
     }()
     
     lazy var exchangeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(CONFIRM, for: .normal)
-        button.titleLabel?.font = UIFont.avenirMedium(size: 20)
-        button.backgroundColor = .appOrange
-        button.setTitleColor(.appDarkblue, for: .normal)
-        button.setTitleColor(.gray, for: .highlighted)
-        button.layer.cornerRadius = 5
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.isEnabled = false
+        let button = UIFactory.createActionButton(title: CONFIRM)
         button.addTarget(self, action: #selector(confirmExchange), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var promoInformation: UILabel = {
+        return UIFactory.createLabel(text: "", size: 12, color: .gray, type: .number)
     }()
     
     private var cancellables: Set<AnyCancellable> = []
@@ -68,12 +64,18 @@ class ExchangeViewController: UIViewController {
             make.left.right.equalToSuperview().inset(15)
             make.height.equalTo(120)
         }
+        
+        view.addSubview(promoInformation)
+        promoInformation.snp.makeConstraints { make in
+            make.top.equalTo(header.snp.bottom).offset(2)
+            make.right.equalToSuperview().inset(15)
+        }
          
         let textFieldContainer = UIFactory.createContainer()
         textFieldContainer.clipsToBounds = true
         view.addSubview(textFieldContainer)
         textFieldContainer.snp.makeConstraints { make in
-            make.top.equalTo(header.snp.bottom).offset(20)
+            make.top.equalTo(promoInformation.snp.bottom).offset(20)
             make.left.right.equalToSuperview().inset(15)
         }
         
@@ -91,8 +93,7 @@ class ExchangeViewController: UIViewController {
         amountLabel.snp.makeConstraints { $0.centerX.centerY.equalToSuperview() }
          
         // set by default to 0
-        inputAmountField.text = "0"
-        inputAmountField.keyboardType = .decimalPad
+        inputAmountField.keyboardType = .numberPad
         inputAmountField.textAlignment = .left
         inputAmountField.minimumFontSize = 5
         inputAmountField.clipsToBounds = true
@@ -116,6 +117,7 @@ class ExchangeViewController: UIViewController {
         setObservers()
     }
     
+    //MARK: Bindings
     func setObservers() {
         viewModel.$fromCurrency
             .receive(on: DispatchQueue.main)
@@ -144,10 +146,29 @@ class ExchangeViewController: UIViewController {
                 let (formatted, _) = self.viewModel.formattedValue(symbol: symbol, field: string)
                 
                 /// set the same display of amount to header sell label
-                let positiveDisplay = "+ " + symbol + formatted
-                self.header.buyValueLabel.text = value < 1 ? "- - - -" : positiveDisplay
+                let positiveDisplay = "+ " + formatted
+                self.header.buyValueLabel.text = value == 0 ? "- - - -" : positiveDisplay
             }
-            .store(in: &cancellables) 
+            .store(in: &cancellables)
+        
+        viewModel.$conversionDisplay
+            .receive(on: DispatchQueue.main)
+            .compactMap{ $0 }
+            .assign(to: \.text, on: promoInformation)
+            .store(in: &cancellables)
+         
+        viewModel.$observableError
+            .receive(on: DispatchQueue.main)
+            .sink{ [weak self] errorReceived in
+                if let error = errorReceived as? ExchangeError {
+                    let alert = UIFactory.createAlert(title: error.title, message: error.message) { _ in
+                        self?.navigationController?.popViewController(animated: true)
+                    }
+                    
+                    self?.navigationController?.present(alert, animated: true)
+                }
+            }
+            .store(in: &cancellables)
         
         Publishers.CombineLatest(viewModel.$fromValue, viewModel.$toValue)
             .receive(on: DispatchQueue.main)
@@ -165,7 +186,35 @@ class ExchangeViewController: UIViewController {
             let alert = UIFactory.createAlert(title: error.title, message: error.message)
             navigationController?.present(alert, animated: true)
         } else {
+            showCompleteDisplay()
             viewModel.proceedExchange()
+        }
+    }
+    
+    func showCompleteDisplay() {
+        inputAmountField.resignFirstResponder()
+        
+        let deductedAmount = String(format: "%.2f", viewModel.fromValue)
+        let convertedFrom = Converted(amount: deductedAmount,
+                                      currency: viewModel.fromCurrency.currency)
+        
+        
+        let convertedAmount = String(format: "%.2f", viewModel.toValue)
+        let convertedTo = Converted(amount: convertedAmount,
+                                    currency: viewModel.toCurrency.currency)
+        let comission = viewModel.exchangeCost()
+        
+        let completedView = CompleteTransactionView(convertedFrom: convertedFrom,
+                                                    convertedTo: convertedTo,
+                                                    commision: comission)
+        completedView.tapAction = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        view.addSubview(completedView)
+        completedView.snp.makeConstraints { make in
+            make.width.height.equalToSuperview()
+            make.center.equalToSuperview()
         }
     }
 }
@@ -174,7 +223,6 @@ extension ExchangeViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
          
         if textField == inputAmountField {
-             
             /// Update Amount Input field with currency format
             textField.text = viewModel.formattedInput(text: textField.text ?? "",
                                                       replacement: string,
@@ -188,7 +236,7 @@ extension ExchangeViewController: UITextFieldDelegate {
             /// set the same display of amount to header sell label
             /// show negative display for BUY
             let negativeDisplay = "- \(self.inputAmountField.text ?? "")"
-            self.header.sellValueLabel.text = value.doubleValue < 1 ? "- - - -"
+            self.header.sellValueLabel.text = value.doubleValue == 0 ? "- - - -"
                                               : negativeDisplay
             
             return false

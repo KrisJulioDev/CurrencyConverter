@@ -10,7 +10,6 @@ import Combine
 
 protocol ConversionServiceProtocol {
     func getConversion(conversion: Conversion) -> AnyPublisher<Converted, Error>
-//    func convert(from: Currency, to: Currency) -> (Currency, Currency)
 }
 
 class ConversionService: ConversionServiceProtocol {

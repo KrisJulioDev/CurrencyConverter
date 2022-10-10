@@ -11,16 +11,16 @@ enum APIError: LocalizedError {
   case invalidRequestError(String)
 }
 
-enum CurrencyServiceError: Error {
+enum DecodingServiceError: Error {
    case fileNotFound
    case decodingFail
    
    var reason: String {
        switch self {
        case .fileNotFound:
-           return "File not found"
+           return "Please try again later"
        case .decodingFail:
-           return "Decoding failed"
+           return "There's something wrong with the server. Try again later"
        }
    }
 }
@@ -28,13 +28,15 @@ enum CurrencyServiceError: Error {
 enum ExchangeError: Error {
     case insufficientBalance
     case somethingIsWrong
-    
+    case serviceNotAvailable
     var title: String {
         switch self {
         case .insufficientBalance:
             return "Exchange failed"
         case .somethingIsWrong:
             return "Something is wrong"
+        case .serviceNotAvailable:
+            return "Service is not available"
         }
     }
     
@@ -44,6 +46,8 @@ enum ExchangeError: Error {
             return "You don't have enough balance to exchange."
         case .somethingIsWrong:
             return "Please try again later."
+        case .serviceNotAvailable:
+            return "Please try again or contact our support team"
         }
     }
     

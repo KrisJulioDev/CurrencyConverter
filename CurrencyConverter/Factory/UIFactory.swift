@@ -53,9 +53,25 @@ struct UIFactory {
         return textField
     }
     
-    static func createAlert(title: String, message: String) -> UIAlertController {
+    static func createActionButton(title: String) -> UIButton {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = UIFont.avenirMedium(size: 20)
+        button.backgroundColor = .appOrange
+        button.setTitleColor(.appDarkblue, for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
+        button.layer.cornerRadius = 5
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+    
+    static func createAlert(title: String,
+                            message: String,
+                            action: ((UIAlertAction) -> Void)? = nil)
+    -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: action)
+        alert.addAction(action)
         return alert
     }
 }

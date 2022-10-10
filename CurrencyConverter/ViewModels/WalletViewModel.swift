@@ -16,10 +16,8 @@ class WalletViewModel {
     
     @Published var currencies: [Currency] = [] 
     @Published var totalMoney: Double = 0
-    @Published var error: CurrencyServiceError?
+    @Published var error: DecodingServiceError?
      
-    /// this can be change depends on user's preference, but for now we set it to USD
-    private let globalCurrency = "USD"
     private var cancellables: Set<AnyCancellable> = []
     
     init(walletService: WalletService, conversionService: ConversionService) {
@@ -31,7 +29,7 @@ class WalletViewModel {
     
     private func fetchCurrencies() {
         do {
-            let wallet: Wallet = try walletService.fetchCurrencies()
+            let wallet: Wallet = try walletService.fetchServiceData()
             let balance = wallet.currencies.filter { $0.amount > 0 }
             
             /// save all user's currencies
@@ -40,7 +38,7 @@ class WalletViewModel {
             /// store all currencies fetched for display
             currencies.append(contentsOf:wallet.currencies)
         } catch(let error) {
-            if let error = error as? CurrencyServiceError {
+            if let error = error as? DecodingServiceError {
                 self.error = error
             }
         }
@@ -76,7 +74,7 @@ class WalletViewModel {
     func getConvertedValue(of currency: Currency) -> AnyPublisher<Double, Error> {
         let conversion = Conversion(fromAmount: currency.amount,
                                     fromCurrency: currency.currency,
-                                    toCurrency: globalCurrency)
+                                    toCurrency: GLOBAL_CURRENCY)
         
         return conversionService
             .getConversion(conversion: conversion)

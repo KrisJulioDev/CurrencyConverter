@@ -31,8 +31,7 @@
 		350D840428F15204004E84F2 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D840328F15204004E84F2 /* UIFactory.swift */; };
 		350D840628F1551E004E84F2 /* ExchangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D840528F1551E004E84F2 /* ExchangeViewModel.swift */; };
 		350D840828F156DC004E84F2 /* CurrencySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D840728F156DC004E84F2 /* CurrencySelectionViewController.swift */; };
-		350D840E28F15A33004E84F2 /* CurrencyServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D840D28F15A33004E84F2 /* CurrencyServiceProtocol.swift */; };
-		350D841028F15A48004E84F2 /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D840F28F15A48004E84F2 /* ExchangeService.swift */; };
+		350D840E28F15A33004E84F2 /* DecodingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D840D28F15A33004E84F2 /* DecodingServiceProtocol.swift */; };
 		350D841228F15DB7004E84F2 /* CurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D841128F15DB7004E84F2 /* CurrencyTableViewCell.swift */; };
 		350D841428F1BB02004E84F2 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D841328F1BB02004E84F2 /* Color+Extension.swift */; };
 		350D841628F1BD60004E84F2 /* Converted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350D841528F1BD60004E84F2 /* Converted.swift */; };
@@ -40,6 +39,9 @@
 		352B9EFC28F28EFF00F0A07E /* ExchangeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B9EFB28F28EFF00F0A07E /* ExchangeHeader.swift */; };
 		352B9EFE28F2B92E00F0A07E /* UserWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B9EFD28F2B92E00F0A07E /* UserWallet.swift */; };
 		352B9F0028F2F28C00F0A07E /* commision_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = 352B9EFF28F2F28C00F0A07E /* commision_rules.json */; };
+		352B9F0228F304D400F0A07E /* Comission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B9F0128F304D400F0A07E /* Comission.swift */; };
+		352B9F0428F3051C00F0A07E /* ComissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B9F0328F3051C00F0A07E /* ComissionService.swift */; };
+		352B9F0728F3A1F300F0A07E /* CompleteTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B9F0628F3A1F300F0A07E /* CompleteTransactionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,8 +89,7 @@
 		350D840328F15204004E84F2 /* UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
 		350D840528F1551E004E84F2 /* ExchangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewModel.swift; sourceTree = "<group>"; };
 		350D840728F156DC004E84F2 /* CurrencySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewController.swift; sourceTree = "<group>"; };
-		350D840D28F15A33004E84F2 /* CurrencyServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyServiceProtocol.swift; sourceTree = "<group>"; };
-		350D840F28F15A48004E84F2 /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
+		350D840D28F15A33004E84F2 /* DecodingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingServiceProtocol.swift; sourceTree = "<group>"; };
 		350D841128F15DB7004E84F2 /* CurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		350D841328F1BB02004E84F2 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		350D841528F1BD60004E84F2 /* Converted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converted.swift; sourceTree = "<group>"; };
@@ -96,6 +97,9 @@
 		352B9EFB28F28EFF00F0A07E /* ExchangeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeHeader.swift; sourceTree = "<group>"; };
 		352B9EFD28F2B92E00F0A07E /* UserWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWallet.swift; sourceTree = "<group>"; };
 		352B9EFF28F2F28C00F0A07E /* commision_rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = commision_rules.json; sourceTree = "<group>"; };
+		352B9F0128F304D400F0A07E /* Comission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comission.swift; sourceTree = "<group>"; };
+		352B9F0328F3051C00F0A07E /* ComissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComissionService.swift; sourceTree = "<group>"; };
+		352B9F0628F3A1F300F0A07E /* CompleteTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTransactionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,10 +209,10 @@
 		350D83DE28F0E64E004E84F2 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				352B9F0528F305B600F0A07E /* Protocols */,
 				350D83DF28F0E662004E84F2 /* WalletService.swift */,
 				350D83EE28F0F3CF004E84F2 /* ConversionService.swift */,
-				350D840D28F15A33004E84F2 /* CurrencyServiceProtocol.swift */,
-				350D840F28F15A48004E84F2 /* ExchangeService.swift */,
+				352B9F0328F3051C00F0A07E /* ComissionService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -238,6 +242,7 @@
 				350D83F328F0F687004E84F2 /* Conversion.swift */,
 				350D841528F1BD60004E84F2 /* Converted.swift */,
 				352B9EFD28F2B92E00F0A07E /* UserWallet.swift */,
+				352B9F0128F304D400F0A07E /* Comission.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 				350D83F628F100DA004E84F2 /* CoinTableViewCell.swift */,
 				350D841128F15DB7004E84F2 /* CurrencyTableViewCell.swift */,
 				352B9EFB28F28EFF00F0A07E /* ExchangeHeader.swift */,
+				352B9F0628F3A1F300F0A07E /* CompleteTransactionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -292,6 +298,14 @@
 				350D840328F15204004E84F2 /* UIFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		352B9F0528F305B600F0A07E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				350D840D28F15A33004E84F2 /* DecodingServiceProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,6 +450,7 @@
 				350D841428F1BB02004E84F2 /* Color+Extension.swift in Sources */,
 				350D840628F1551E004E84F2 /* ExchangeViewModel.swift in Sources */,
 				352B9EFC28F28EFF00F0A07E /* ExchangeHeader.swift in Sources */,
+				352B9F0728F3A1F300F0A07E /* CompleteTransactionView.swift in Sources */,
 				350D83EF28F0F3CF004E84F2 /* ConversionService.swift in Sources */,
 				352B9EFE28F2B92E00F0A07E /* UserWallet.swift in Sources */,
 				350D83F228F0F4AE004E84F2 /* HTTPClient.swift in Sources */,
@@ -448,13 +463,14 @@
 				350D83A928F0E4F1004E84F2 /* AppDelegate.swift in Sources */,
 				350D83FF28F135BE004E84F2 /* Constants.swift in Sources */,
 				350D83FA28F10D4F004E84F2 /* UIFont.swift in Sources */,
+				352B9F0428F3051C00F0A07E /* ComissionService.swift in Sources */,
 				350D840128F13689004E84F2 /* ExchangeViewController.swift in Sources */,
 				350D83E028F0E662004E84F2 /* WalletService.swift in Sources */,
 				350D83DD28F0E643004E84F2 /* WalletViewModel.swift in Sources */,
-				350D840E28F15A33004E84F2 /* CurrencyServiceProtocol.swift in Sources */,
+				350D840E28F15A33004E84F2 /* DecodingServiceProtocol.swift in Sources */,
 				350D841828F1BDC5004E84F2 /* Errors.swift in Sources */,
-				350D841028F15A48004E84F2 /* ExchangeService.swift in Sources */,
 				350D83AB28F0E4F1004E84F2 /* SceneDelegate.swift in Sources */,
+				352B9F0228F304D400F0A07E /* Comission.swift in Sources */,
 				350D83DA28F0E61A004E84F2 /* WalletViewController.swift in Sources */,
 				350D840428F15204004E84F2 /* UIFactory.swift in Sources */,
 			);

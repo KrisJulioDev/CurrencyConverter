@@ -7,19 +7,19 @@
  
 import Foundation
  
-class WalletService: CurrencyServiceProtocol {
-    func fetchCurrencies<T: Codable>() throws -> T {
+class WalletService: DecodingServiceProtocol {
+    func fetchServiceData<T: Codable>() throws -> T {
         guard let jsonFile = Bundle.main.url(forResource: "wallet",
                                              withExtension: "json")
         else {
-            throw CurrencyServiceError.fileNotFound
+            throw DecodingServiceError.fileNotFound
         }
         
         do {
             let data = try Data(contentsOf: jsonFile)
             return try JSONDecoder().decode(T.self, from: data)
         } catch {
-            throw CurrencyServiceError.decodingFail
+            throw DecodingServiceError.decodingFail
         }
     }
 }

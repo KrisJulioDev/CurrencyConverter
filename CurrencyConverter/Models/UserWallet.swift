@@ -9,10 +9,15 @@ import Combine
 
 /// hash-map to store values of all currencies, we can use to sum up user's wallet into USD
 class UserWallet {
+    /// should be in user data, but fow now lets put this to the wallet
+    var transactionsFulfilled = 0
+    
     /// use to store all kind of currencies
     @Published var international: [Currency] = []
     
-    /// use to store all currencies converted to dollar
+    /// use to store all currencies converted to dollar, this is used to display total balance in wallet view controller
+    /// @String : symbol of the currency for easy hash lookup and prevent duplication
+    /// @Double: value of the currency in dollar converted
     @Published var dollars: [String: Double] = [:]
 }
 

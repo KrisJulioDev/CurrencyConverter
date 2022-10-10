@@ -20,8 +20,8 @@ class WalletViewModel {
      
     private var cancellables: Set<AnyCancellable> = []
     
-    init(walletService: WalletService, conversionService: ConversionService) {
-        self.userWallet = UserWallet()
+    init(userWallet: UserWallet, walletService: WalletService, conversionService: ConversionService) {
+        self.userWallet = userWallet
         self.walletService = walletService
         self.conversionService = conversionService
         self.fetchCurrencies()
@@ -54,6 +54,7 @@ class WalletViewModel {
             .subscribe(on: DispatchQueue.global())
             .sink(receiveValue: { [weak self] currencies in
                 currencies.forEach { [weak self] currency in
+                    self?.userWallet.dollars = [:]
                     guard let self = self else { return }
                     self.getConvertedValue(of: currency)
                         .replaceError(with: 0)

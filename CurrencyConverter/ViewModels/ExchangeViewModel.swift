@@ -16,9 +16,10 @@ class ExchangeViewModel {
         case none
     }
     
+    let userWallet: UserWallet
+    let walletService: WalletService
     let comissionService: ComissionService
     let conversionService: ConversionService
-    let userWallet: UserWallet
     
     var cancellables: Set<AnyCancellable> = []
     var conversionCancellable: Set<AnyCancellable> = []
@@ -29,8 +30,8 @@ class ExchangeViewModel {
     @Published var comission: Comission?
     
     /// observe this values to fetch the exchange conversion and display it to the user
-    @Published var fromCurrency: Currency
-    @Published var toCurrency: Currency
+    @Published var fromCurrency: Currency?
+    @Published var toCurrency: Currency?
       
     @Published var fromValue: Double = 0
     @Published var toValue: Double = 0
@@ -44,25 +45,40 @@ class ExchangeViewModel {
     @Published var comissionInReqdCurrency: Double = 0
     
     /// we require currencies to have at least 2 data, otherwise there's no sense to show to the Exchange UI
-    init(currencies: [Currency],
-         wallet: UserWallet,
+    init(wallet: UserWallet,
+         walletService: WalletService,
          conversionService: ConversionService,
          comissionService: ComissionService) {
         
         self.userWallet = wallet
-        self.currencies = currencies
+        self.walletService = walletService
         self.conversionService = conversionService
         self.comissionService = comissionService
-        
-        /// set first currency by default as From
-        self.fromCurrency = currencies[0]
-        self.toCurrency = currencies[1]
+         
+        fetchCurrencies()
         
         /// fetch all rules for promo
         fetchPromos()
         
         /// set all the bindings to viewmodel as well
         setObservables()
+    }
+    
+    private func fetchCurrencies() {
+        do {
+            let wallet: Wallet = try walletService.fetchServiceData()
+             
+            /// store all currencies fetched for display
+            currencies.append(contentsOf:wallet.currencies)
+            
+            /// set first currency by default as From
+            fromCurrency = currencies[0]
+            toCurrency = currencies[1]
+        } catch(let error) {
+            if let error = error as? DecodingServiceError {
+                self.observableError = error
+            }
+        }
     }
     
     func fetchPromos() {
@@ -81,10 +97,14 @@ class ExchangeViewModel {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] value in
-                guard let self = self else { return }
+                guard
+                    let self = self,
+                    let fromCurrency = self.fromCurrency,
+                    let toCurrency = self.toCurrency
+                else { return }
                 
-                let fromSymbol = self.fromCurrency.currency
-                let toSymbol = self.toCurrency.currency
+                let fromSymbol = fromCurrency.currency
+                let toSymbol = toCurrency.currency
                 
                 /// fetch conversion everytime the value changes with debounce of 0.5 seconds to prevent spam requests
                 let conversion = Conversion(fromAmount: value, fromCurrency: fromSymbol, toCurrency: toSymbol)
@@ -99,7 +119,10 @@ class ExchangeViewModel {
             .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] type in
-                guard let self = self else { return }
+                guard
+                    let self = self,
+                    let fromCurrency = self.fromCurrency
+                else { return }
                 
                 var str = ""
                 switch type {
@@ -112,7 +135,7 @@ class ExchangeViewModel {
                     str = "Free charge every \(interval) transactions"
                 default:
                     let cost = String(format: "%.2f", self.exchangeCost())
-                    let fee = cost + " \(self.fromCurrency.currency)"
+                    let fee = cost + " \(fromCurrency.currency)"
                     let percentage = (self.comission?.commisionRate ?? 0) * 100
                     str = "Comission fee for this transaction: " + fee + " (\(String(format: "%.2f", percentage))%)"
                 }
@@ -130,6 +153,8 @@ class ExchangeViewModel {
     
     //MARK: Business logic
     func currentBalance() -> Double {
+        guard let fromCurrency = fromCurrency else { return 0 }
+        
         if let currencyInWallet = userWallet.currencyInWallet(symbol: fromCurrency.currency) {
             return currencyInWallet.amount
         }
@@ -152,14 +177,19 @@ class ExchangeViewModel {
             com = comissionInReqdCurrency * (comission?.commisionRate ?? 0)
         }
         
-        if userWallet.hasBalance(amount: fromValue + com, currency: fromCurrency) == false {
+        if let fromCurrency = fromCurrency,
+           userWallet.hasBalance(amount: fromValue + com, currency: fromCurrency) == false {
             return .insufficientBalance
         }
         return nil
     }
     
     func updateComission() {
-        guard let comission = comission else { return }
+        guard let comission = comission,
+              let fromCurrency = fromCurrency
+        else {
+            return
+        }
         let conversion = Conversion(fromAmount: fromValue,
                                     fromCurrency: fromCurrency.currency,
                                     toCurrency: comission.amountMinInCurrency)
@@ -203,6 +233,13 @@ class ExchangeViewModel {
     }
     
     func proceedExchange() {
+        guard
+            let fromCurrency = fromCurrency,
+            let toCurrency = toCurrency
+        else {
+            return
+        }
+        
         /// Update data in wallet with new deducted value
         if let currencyInWallet = userWallet.currencyInWallet(symbol: fromCurrency.currency) {
             let newAmount = currencyInWallet.amount - totalExchangeCost()

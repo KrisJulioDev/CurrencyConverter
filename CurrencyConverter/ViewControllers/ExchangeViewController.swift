@@ -147,7 +147,7 @@ class ExchangeViewController: UIViewController {
             .sink { [weak self] value in
                 guard let self = self else { return }
                 let string = String(value)
-                let symbol = self.viewModel.toCurrency.symbol
+                let symbol = self.viewModel.toCurrency?.symbol ?? ""
                 let (formatted, _) = self.viewModel.formattedValue(symbol: symbol, field: string)
                 
                 /// set the same display of amount to header sell label
@@ -197,16 +197,21 @@ class ExchangeViewController: UIViewController {
     }
     
     func showCompleteDisplay() {
+        guard let fromCurrency = viewModel.fromCurrency?.currency,
+              let toCurrency = viewModel.toCurrency?.currency
+        else {
+            return
+        }
         inputAmountField.resignFirstResponder()
         
         let deductedAmount = String(format: "%.2f", viewModel.fromValue)
         let convertedFrom = Converted(amount: deductedAmount,
-                                      currency: viewModel.fromCurrency.currency)
+                                      currency: fromCurrency)
         
         
         let convertedAmount = String(format: "%.2f", viewModel.toValue)
         let convertedTo = Converted(amount: convertedAmount,
-                                    currency: viewModel.toCurrency.currency)
+                                    currency: toCurrency)
         let comission = viewModel.exchangeCost()
         
         let completedView = CompleteTransactionView(convertedFrom: convertedFrom,
@@ -233,16 +238,17 @@ extension ExchangeViewController: UITextFieldDelegate {
                                                       replacement: string,
                                                       range: range)
             
-            let fromCurrency = viewModel.fromCurrency
-            let symbol = fromCurrency.symbol
-            let (_, value) = viewModel.formattedValue(symbol: symbol, field: textField.text ?? "")
-            self.viewModel.inputChanged(value.doubleValue)
-            
-            /// set the same display of amount to header sell label
-            /// show negative display for BUY
-            let negativeDisplay = "- \(self.inputAmountField.text ?? "")"
-            self.header.sellValueLabel.text = value.doubleValue == 0 ? "- - - -"
-                                              : negativeDisplay
+            if let fromCurrency = viewModel.fromCurrency {
+                let symbol = fromCurrency.symbol
+                let (_, value) = viewModel.formattedValue(symbol: symbol, field: textField.text ?? "")
+                self.viewModel.inputChanged(value.doubleValue)
+                
+                /// set the same display of amount to header sell label
+                /// show negative display for BUY
+                let negativeDisplay = "- \(self.inputAmountField.text ?? "")"
+                self.header.sellValueLabel.text = value.doubleValue == 0 ? "- - - -"
+                                                  : negativeDisplay
+            }
             
             return false
         } else {

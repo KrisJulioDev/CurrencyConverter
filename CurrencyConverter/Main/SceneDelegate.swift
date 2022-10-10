@@ -17,10 +17,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
     
+        let userWallet = UserWallet()
         let walletService = WalletService()
         let client = ConversionHTTPClient()
         let conversionService = ConversionService(client: client)
-        let walletViewModel = WalletViewModel(walletService: walletService, conversionService: conversionService)
+        let walletViewModel = WalletViewModel(userWallet: userWallet,
+                                              walletService: walletService,
+                                              conversionService: conversionService)
         
         let walletViewController = WalletViewController(viewModel: walletViewModel)
         let navigation = UINavigationController(rootViewController: walletViewController)

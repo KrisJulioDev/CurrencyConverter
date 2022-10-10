@@ -11,9 +11,7 @@ import Combine
 
 class WalletViewController: UIViewController {
     private var cancellables: Set<AnyCancellable> = []
-    
     let viewModel: WalletViewModel
-    
      
     lazy var totalAmount: UILabel = {
         return UIFactory.createLabel(text: TOTAL_BALANCE,
@@ -120,6 +118,7 @@ extension WalletViewController {
     }
     
     func setupObservers() {
+        /// reload tableview to show all users currency in wallet
         viewModel.userWallet.$international
             .receive(on: DispatchQueue.main)
             .sink { [weak self] curr in
@@ -127,6 +126,7 @@ extension WalletViewController {
             }
             .store(in: &cancellables)
         
+        /// keep total balance display up to date
         viewModel.$totalMoney
             .receive(on: DispatchQueue.main)
             .compactMap { Formatter.currency(val: $0, symbol: "$")}
@@ -146,7 +146,7 @@ extension WalletViewController {
             .sink { [weak self] err in
                 if let e = err {
                     let alert = UIFactory.createAlert(title: "System Error", message: e.reason) { _ in
-                        // simulate crash to close the app
+                        // simulate crash to close the app for now
                         exit(0)
                     }
                     self?.navigationController?.present(alert, animated: true)
@@ -159,8 +159,10 @@ extension WalletViewController {
         let client = ConversionHTTPClient()
         let service = ConversionService(client: client)
         let comissionService = ComissionService()
-        let viewModel = ExchangeViewModel(currencies: viewModel.currencies,
-                                          wallet: viewModel.userWallet,
+        let walletService = WalletService()
+        
+        let viewModel = ExchangeViewModel(wallet: viewModel.userWallet,
+                                          walletService: walletService,
                                           conversionService: service,
                                           comissionService: comissionService)
         let exchangeViewController = ExchangeViewController(viewModel: viewModel)

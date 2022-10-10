@@ -30,7 +30,7 @@ Details
   - 200 EUR minimum is free transaction
   - 10 intervals is free transaction
 - Didn't add data persistency since the data always come from json every time the app launches
-- UI/UX couldn't be the best, but I tried :D 
+- UI/UX isn't be the best, but I tried :D 
 
 ![screenshots](https://user-images.githubusercontent.com/8087709/194843096-8007a7de-1935-468e-b690-ba7ec7662092.png)
 

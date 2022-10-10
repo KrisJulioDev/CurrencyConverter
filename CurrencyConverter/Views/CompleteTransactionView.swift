@@ -40,14 +40,14 @@ class CompleteTransactionView: UIView {
         }
         
         let blackView = UIView()
-        blackView.backgroundColor = .black.withAlphaComponent(0.8)
+        blackView.backgroundColor = .appOrange.withAlphaComponent(0.8)
         container.addSubview(blackView)
         blackView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(60)
         }
         
-        let title = UIFactory.createLabel(text: CURRENCY_CONVERTED, size: 26, color: .white, type: .bold)
+        let title = UIFactory.createLabel(text: CURRENCY_CONVERTED, size: 26, color: .black, type: .bold)
         title.textAlignment = .center
         container.addSubview(title)
         title.snp.makeConstraints { make in
@@ -63,9 +63,9 @@ class CompleteTransactionView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        let deducted = UIFactory.createLabel(text: convertedFrom.amount + " " +  convertedFrom.currency,
+        let deducted = UIFactory.createLabel(text: convertedFrom.amount.currencyFormatting() + " " +  convertedFrom.currency,
                                              size: 32,
-                                             color: .white,
+                                             color: .lightGray,
                                              type: .number)
         deducted.textAlignment = .center
         container.addSubview(deducted)
@@ -82,7 +82,7 @@ class CompleteTransactionView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        let added = UIFactory.createLabel(text: convertedTo.amount + " " + convertedTo.currency,
+        let added = UIFactory.createLabel(text: convertedTo.amount.currencyFormatting() + " " + convertedTo.currency,
                                           size: 32,
                                           color: .green,
                                           type: .number)

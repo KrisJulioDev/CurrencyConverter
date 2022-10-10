@@ -16,6 +16,8 @@ struct Comission: Codable {
 
 // MARK: - PromoElement
 struct PromoElement: Codable {
-    let freeTransaction, amountMin, intervals: Int
+    let type: String
+    let value: Int
+    let currency: String?
 }
 

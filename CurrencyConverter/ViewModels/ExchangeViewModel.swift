@@ -190,6 +190,7 @@ class ExchangeViewModel {
         else {
             return
         }
+        
         let conversion = Conversion(fromAmount: fromValue,
                                     fromCurrency: fromCurrency.currency,
                                     toCurrency: comission.amountMinInCurrency)
@@ -211,21 +212,27 @@ class ExchangeViewModel {
         
         /// check promo if the user is eligible for free transactions
         comission.promos.forEach { promo in
-            if userWallet.transactionsFulfilled < promo.freeTransaction {
-                promoType = .freeTransaction(promo.freeTransaction)
-                return
+            if promo.type == "free_transaction" {
+                if userWallet.transactionsFulfilled < promo.value {
+                    promoType = .freeTransaction(promo.value)
+                    return
+                }
             }
-             
-            if userWallet.transactionsFulfilled > 0 &&
-                /// add + 1, fulfilled + this transaction check
-                (userWallet.transactionsFulfilled + 1) % promo.intervals == 0 {
-                promoType = .interval(promo.intervals)
-                return
+            
+            if promo.type == "intervals" {
+                if userWallet.transactionsFulfilled > 0 &&
+                    /// add + 1, fulfilled + this transaction check
+                    (userWallet.transactionsFulfilled + 1) % promo.value == 0 {
+                    promoType = .interval(promo.value)
+                    return
+                }
             }
-             
-            if comissionInReqdCurrency >= Double(promo.amountMin) {
-                promoType = .minAmount(promo.amountMin)
-                return
+            
+            if promo.type == "amount_minimum" {
+                if comissionInReqdCurrency >= Double(promo.value) && fromCurrency?.currency == promo.currency {
+                    promoType = .minAmount(promo.value)
+                    return
+                }
             }
         }
         

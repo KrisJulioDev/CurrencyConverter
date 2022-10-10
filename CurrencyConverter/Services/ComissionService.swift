@@ -8,7 +8,6 @@
 import Foundation
 
 class ComissionService: DecodingServiceProtocol {
-    
     /// fetch comission from json, throw error serviceNotAvailable if fails
     func fetchServiceData<T: Codable>() throws -> T {
         guard let jsonFile = Bundle.main.url(forResource: "commision_rules",
@@ -24,6 +23,4 @@ class ComissionService: DecodingServiceProtocol {
             throw ExchangeError.serviceNotAvailable
         }
     }
-    
-    
-}
+} 

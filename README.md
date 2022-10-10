@@ -10,7 +10,7 @@ Language & Envinronment:
 - Swift 5 & Xcode 14.0
 ---
 Total Hours: 
-- Estimated 16 hours in 3days
+- Estimated 13 hours in 3days
 ---
 3rd Party Library used: 
 ---
@@ -28,7 +28,7 @@ Details
 - Rules are applied and fetch also from json file _comission_rule.json_. Rules that is implemented are 
   - 5 Free tansaction 
   - 200 EUR minimum is free transaction
-  - 10 intervals is free transaction
+  - 10 intervals is free transaction 
 - Didn't add data persistency since the data always come from json every time the app launches
 - UI/UX isn't the best, but I tried :D 
 

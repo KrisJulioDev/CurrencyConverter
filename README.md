@@ -12,8 +12,6 @@ Language & Envinronment:
 Total Hours: 
 - Estimated 16 hours in 3days
 ---
-- 
----
 3rd Party Library used: 
 ---
 - Snapkit using PCM : Since I didn't use NIB and Storyboard, this library helps me to layout the UI quicker.
@@ -21,7 +19,7 @@ Total Hours:
 Architecture
 ---
 - Ive used Model-View-ViewModel(MVVM) for the architecture. You can also see some patterns like direct injection(DI), factory, delegation, decorators. 
-- I applied single responsibility principle which can be helpful for Unit Testing, though I haven't added Unit Tests for this as it isn't required from the test.
+- I applied single responsibility principle which can be helpful for Unit Testing.
 ---
 Details
 ---
